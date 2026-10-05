@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "121294387458",
+    "project_id": "mehreen-backend",
+    "storage_bucket": "mehreen-backend.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121294387458:android:fbca0b187007abcbef6a1b",
+        "android_client_info": {
+          "package_name": "com.example.mehreen_backend"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-65_Ou4PhOyQJJ9wycW-XeX083vG_4KA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

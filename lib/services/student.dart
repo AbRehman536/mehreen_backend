@@ -6,9 +6,14 @@ class StudentService{
   String studentCollection = "Students";
   ///Create Student
   Future createStudent(StudentModel model)async{
+    DocumentReference docRef =
+    await FirebaseFirestore.instance
+    .collection(studentCollection)
+    .doc();
     return await FirebaseFirestore.instance
         .collection(studentCollection)
-        .add(model.toJson());
+        .doc(docRef.id)
+        .set(model.toJson(docRef.id));
   }
   ///Update Student
   Future updateStudent(StudentModel model)async{

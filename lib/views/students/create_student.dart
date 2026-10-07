@@ -13,6 +13,7 @@ class _CreateStudentState extends State<CreateStudent> {
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController cityController = TextEditingController();
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,8 +45,11 @@ class _CreateStudentState extends State<CreateStudent> {
             ),
           ),
           SizedBox(height: 10,),
-          ElevatedButton(onPressed: ()async{
+          isLoading ? Center(child: CircularProgressIndicator(),)
+          :ElevatedButton(onPressed: ()async{
             try{
+              isLoading = true;
+              setState(() {});
               await StudentService().createStudent(
                   StudentModel(
                       name: nameController.text.toString(),
@@ -54,8 +58,24 @@ class _CreateStudentState extends State<CreateStudent> {
                       isPassed: false,
                       createdAt: DateTime.now().millisecondsSinceEpoch
                   )
-              );
+              ).then((val){
+                isLoading = false;
+                setState(() {});
+                showDialog(context: context, builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Text("Student Create Successfully"),
+                    actions: [
+                      TextButton(onPressed: (){
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      }, child: Text("Okay"))
+                    ],
+                  );
+                },);
+              });
             }catch(e){
+              isLoading = false;
+              setState(() {});
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(e.toString())));
             }

@@ -4,10 +4,6 @@
 
 import 'dart:convert';
 
-StudentModel studentModelFromJson(String str) => StudentModel.fromJson(json.decode(str));
-
-String studentModelToJson(StudentModel data) => json.encode(data.toJson());
-
 class StudentModel {
   final String? docId;
   final String? name;
@@ -34,8 +30,8 @@ class StudentModel {
     createdAt: json["createdAt"],
   );
 
-  Map<String, dynamic> toJson() => {
-    "docID": docId,
+  Map<String, dynamic> toJson(String studentID) => {
+    "docID": studentID,
     "name": name,
     "age": age,
     "city": city,

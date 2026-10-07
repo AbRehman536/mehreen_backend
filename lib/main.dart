@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mehreen_backend/firebase_options.dart';
 import 'package:mehreen_backend/views/students/create_student.dart';
+import 'package:mehreen_backend/views/students/get_all_students.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: CreateStudent(),
+      home: GetAllStudents(),
     );
   }
 }

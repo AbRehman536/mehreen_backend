@@ -23,10 +23,10 @@ class StudentService{
         .update({"name" : model.name, "age": model.age, "city" : model.city,});
   }
   ///Delete Student
-  Future deleteStudent(StudentModel model)async{
+  Future deleteStudent(String studentID)async{
     return await FirebaseFirestore.instance
         .collection(studentCollection)
-        .doc(model.docId)
+        .doc(studentID)
         .delete();
   }
   ///Mark Students

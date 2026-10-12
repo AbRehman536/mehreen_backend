@@ -30,11 +30,11 @@ class StudentService{
         .delete();
   }
   ///Mark Students
-  Future markStudent(StudentModel model)async{
+  Future markStudent(String studentID, bool isPassed)async{
     return await FirebaseFirestore.instance
         .collection(studentCollection)
-        .doc(model.docId)
-        .update({"isPassed" : model.isPassed});
+        .doc(studentID)
+        .update({"isPassed" : isPassed});
   }
   ///Get All Students
   Stream<List<StudentModel>> getAllStudents(){
@@ -67,5 +67,34 @@ class StudentService{
         .map((studentJson)=> StudentModel.fromJson(studentJson.data()))
         .toList()
     );
+  }
+  ///Get All Saved Students
+  Stream<List<StudentModel>> getAllSavedStudents(String userID){
+    return FirebaseFirestore.instance
+        .collection(studentCollection)
+        .where("saved" , arrayContains: userID)
+        .snapshots()
+        .map((studentList)=> studentList.docs
+        .map((studentJson)=> StudentModel.fromJson(studentJson.data()))
+        .toList()
+    );
+  }
+  ///add to Saved
+  Future addToSaved({
+    required String userID, required String studentID})
+  async{
+    return await FirebaseFirestore.instance
+        .collection(studentCollection)
+        .doc(studentID)
+        .update({"saved": FieldValue.arrayUnion([userID])});
+  }
+  ///remove From Saved
+  Future removeFromSaved({
+    required String userID, required String studentID})
+  async{
+    return await FirebaseFirestore.instance
+        .collection(studentCollection)
+        .doc(studentID)
+        .update({"saved": FieldValue.arrayRemove([userID])});
   }
 }

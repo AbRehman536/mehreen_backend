@@ -10,6 +10,7 @@ class StudentModel {
   final int? age;
   final String? city;
   final bool? isPassed;
+  final List<dynamic>? saved;
   final int? createdAt;
 
   StudentModel({
@@ -18,6 +19,7 @@ class StudentModel {
     this.age,
     this.city,
     this.isPassed,
+    this.saved,
     this.createdAt,
   });
 
@@ -27,6 +29,7 @@ class StudentModel {
     age: json["age"],
     city: json["city"],
     isPassed: json["isPassed"],
+    saved: json["saved"] == null ? [] : List<dynamic>.from(json["saved"]!.map((x) => x)),
     createdAt: json["createdAt"],
   );
 
@@ -36,6 +39,7 @@ class StudentModel {
     "age": age,
     "city": city,
     "isPassed": isPassed,
+    "saved": saved == null ? [] : List<dynamic>.from(saved!.map((x) => x)),
     "createdAt": createdAt,
   };
 }

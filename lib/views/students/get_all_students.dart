@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mehreen_backend/models/student.dart';
 import 'package:mehreen_backend/services/student.dart';
 import 'package:mehreen_backend/views/students/create_student.dart';
+import 'package:mehreen_backend/views/students/get_failed.dart';
+import 'package:mehreen_backend/views/students/get_passed.dart';
+import 'package:mehreen_backend/views/students/get_saved_students.dart';
 import 'package:mehreen_backend/views/students/update_student.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +18,17 @@ class GetAllStudents extends StatelessWidget {
         title: Text("All Students"),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> GetAllSavedStudents()));
+          }, icon: Icon(Icons.bookmark_added_sharp)),
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> GetPassedStudents()));
+          }, icon: Icon(Icons.check_circle)),
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> GetFailedStudents()));
+          }, icon: Icon(Icons.close)),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
@@ -84,6 +98,30 @@ class GetAllStudents extends StatelessWidget {
                             ),
                             Row(
                               children: [
+                                Checkbox(
+                                    value: studentList[index].isPassed,
+                                    onChanged: (value)async{
+                                      try{
+                                        await StudentService().markStudent(
+                                            studentList[index].docId.toString(),
+                                            value!);
+                                      }catch(e){
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(content: Text(e.toString())));
+                                      }
+                                    }),
+                                IconButton(onPressed: ()async{
+                                  if(studentList[index].saved!.contains("101")){
+                                    await StudentService().removeFromSaved(
+                                        userID: "101",
+                                        studentID: studentList[index].docId.toString());
+                                  }
+                                  else{
+                                    await StudentService().addToSaved(
+                                        userID: "101",
+                                        studentID: studentList[index].docId.toString());
+                                  }
+                                }, icon: Icon(studentList[index].saved!.contains("101") ? Icons.bookmark : Icons.bookmark_border_outlined)),
                                 IconButton(onPressed: ()async{
                                   try{
                                     await StudentService().deleteStudent(

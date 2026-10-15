@@ -6,6 +6,7 @@ import 'dart:convert';
 
 class StudentModel {
   final String? docId;
+  final String? courseID;
   final String? name;
   final int? age;
   final String? city;
@@ -15,6 +16,7 @@ class StudentModel {
 
   StudentModel({
     this.docId,
+    this.courseID,
     this.name,
     this.age,
     this.city,
@@ -25,6 +27,7 @@ class StudentModel {
 
   factory StudentModel.fromJson(Map<String, dynamic> json) => StudentModel(
     docId: json["docID"],
+    courseID: json["courseID"],
     name: json["name"],
     age: json["age"],
     city: json["city"],
@@ -35,6 +38,7 @@ class StudentModel {
 
   Map<String, dynamic> toJson(String studentID) => {
     "docID": studentID,
+    "courseID": courseID,
     "name": name,
     "age": age,
     "city": city,

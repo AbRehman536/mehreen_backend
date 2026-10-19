@@ -40,4 +40,15 @@ class CourseService{
         .toList()
     );
   }
+  ///Get Courses
+  Future<List<CourseModel>> getCourses(){
+    return FirebaseFirestore.instance
+        .collection(CourseCollection)
+        .orderBy("createdAt" , descending: true)
+        .get()
+        .then((CourseList)=> CourseList.docs
+        .map((CourseJson)=> CourseModel.fromJson(CourseJson.data()))
+        .toList()
+    );
+  }
 }

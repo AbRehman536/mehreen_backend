@@ -97,4 +97,15 @@ class StudentService{
         .doc(studentID)
         .update({"saved": FieldValue.arrayRemove([userID])});
   }
+  ///Get Student by Course ID
+  Stream<List<StudentModel>> getStudentByCourseID(String courseID){
+    return FirebaseFirestore.instance
+        .collection(studentCollection)
+        .where("courseID", isEqualTo: courseID)
+        .snapshots()
+        .map((studentList)=> studentList.docs
+        .map((studentJson)=> StudentModel.fromJson(studentJson.data()))
+        .toList()
+    );
+  }
 }

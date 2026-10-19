@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mehreen_backend/models/Course.dart';
 import 'package:mehreen_backend/models/student.dart';
+import 'package:mehreen_backend/services/course.dart';
 import 'package:mehreen_backend/services/student.dart';
 
 class CreateStudent extends StatefulWidget {
@@ -14,6 +16,19 @@ class _CreateStudentState extends State<CreateStudent> {
   TextEditingController ageController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   bool isLoading = false;
+
+  List<CourseModel> courseList = [];
+  CourseModel? selectedCourse;
+  @override
+  void initState(){
+    super.initState();
+    CourseService().getCourses()
+    .then((value){
+      setState(() {
+        courseList = value;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +60,20 @@ class _CreateStudentState extends State<CreateStudent> {
             ),
           ),
           SizedBox(height: 10,),
+          DropdownButtonFormField(
+            hint: Text("Select Course"),
+              value: selectedCourse,
+              items: courseList.map((course){
+                return DropdownMenuItem(
+                  value: course,
+                    child: Text(course.courseName.toString()));
+              }).toList(),
+              onChanged: (val){
+              setState(() {
+                selectedCourse = val;
+              });
+              }),
+          SizedBox(height: 10,),
           isLoading ? Center(child: CircularProgressIndicator(),)
           :ElevatedButton(onPressed: ()async{
             try{
@@ -52,6 +81,7 @@ class _CreateStudentState extends State<CreateStudent> {
               setState(() {});
               await StudentService().createStudent(
                   StudentModel(
+                    courseID: selectedCourse!.docId.toString(),
                       name: nameController.text.toString(),
                       age: int.parse(ageController.text),
                       city: cityController.text.toString(),

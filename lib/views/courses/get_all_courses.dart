@@ -4,6 +4,7 @@ import 'package:mehreen_backend/models/student.dart';
 import 'package:mehreen_backend/services/course.dart';
 import 'package:mehreen_backend/services/student.dart';
 import 'package:mehreen_backend/views/courses/create_update_cpurse.dart';
+import 'package:mehreen_backend/views/courses/get_students.dart';
 import 'package:mehreen_backend/views/students/create_student.dart';
 import 'package:mehreen_backend/views/students/get_failed.dart';
 import 'package:mehreen_backend/views/students/get_passed.dart';
@@ -95,7 +96,10 @@ class GetAllCourses extends StatelessWidget {
                                 }, icon: Icon(Icons.delete,color: Colors.red,)),
                                 IconButton(onPressed: (){
                                   Navigator.push(context, MaterialPageRoute(builder: (context)=> CreateUpdateCourse(model: courseList[index], isUpdatedMode: true,)));
-                                }, icon: Icon(Icons.edit, color: Colors.blue,))
+                                }, icon: Icon(Icons.edit, color: Colors.blue,)),
+                                IconButton(onPressed: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> GetStudents(model: courseList[index])));
+                                }, icon: Icon(Icons.arrow_forward, color: Colors.green,))
                               ],
                             )
                           ],

@@ -1,16 +1,21 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mehreen_backend/firebase_options.dart';
+import 'package:mehreen_backend/provider/user.dart';
 import 'package:mehreen_backend/views/auth/login.dart';
 import 'package:mehreen_backend/views/students/create_student.dart';
 import 'package:mehreen_backend/views/students/get_all_students.dart';
+import 'package:provider/provider.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => UserProvider())
+  ],
+  child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -40,7 +45,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: GetAllStudents(),
+      home: LoginScreen(),
     );
   }
 }

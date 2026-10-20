@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mehreen_backend/models/student.dart';
 import 'package:mehreen_backend/services/student.dart';
 import 'package:mehreen_backend/views/courses/get_all_courses.dart';
+import 'package:mehreen_backend/views/profile/get_profile.dart';
 import 'package:mehreen_backend/views/students/create_student.dart';
 import 'package:mehreen_backend/views/students/get_failed.dart';
 import 'package:mehreen_backend/views/students/get_passed.dart';
@@ -32,6 +33,9 @@ class GetAllStudents extends StatelessWidget {
           IconButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=> GetAllCourses()));
           }, icon: Icon(Icons.school)),
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> GetProfile()));
+          }, icon: Icon(Icons.person)),
         ],
       ),
       floatingActionButton: FloatingActionButton(

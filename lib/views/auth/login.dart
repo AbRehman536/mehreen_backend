@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mehreen_backend/models/userModel.dart';
+import 'package:mehreen_backend/provider/user.dart';
 import 'package:mehreen_backend/services/auth.dart';
+import 'package:mehreen_backend/services/user.dart';
 import 'package:mehreen_backend/views/auth/register.dart';
 import 'package:mehreen_backend/views/auth/reset_password.dart';
 import 'package:mehreen_backend/views/students/get_all_students.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Login"),
@@ -47,26 +52,23 @@ class _LoginScreenState extends State<LoginScreen> {
               await AuthService().loginUser(
                   email: emailController.text,
                   password: passwordController.text)
-                  .then((value){
-                    if(value.emailVerified == true){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> GetAllStudents()));
-                    }
-                    else{
-                      isLoading = false;
-                      setState(() {});
-                      showDialog(
-                        context: context, builder: (BuildContext context) {
-                        return AlertDialog(
-                          content: Text("Kindly Verify Your Email"),
-                          actions: [
-                            TextButton(onPressed: (){
-                              Navigator.pop(context);
-                            }, child: Text("Okay"))
-                          ],
-                        );
-                      },);
-                    }
-
+                  .then((value)async{
+                    UserModel userModel =
+                    await UserService().getUserByID(value.uid.toString());
+                    userProvider.setUser(userModel);
+                    isLoading = false;
+                    setState(() {});
+                    showDialog(
+                      context: context, builder: (BuildContext context) {
+                      return AlertDialog(
+                        content: Text("Login Successfully"),
+                        actions: [
+                          TextButton(onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> GetAllStudents()));
+                          }, child: Text("Okay"))
+                        ],
+                      );
+                    },);
               });
             }catch(e){
               isLoading = false;

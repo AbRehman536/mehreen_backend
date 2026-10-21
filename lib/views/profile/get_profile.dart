@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mehreen_backend/provider/user.dart';
+import 'package:mehreen_backend/views/profile/update_profile.dart';
 import 'package:provider/provider.dart';
 
 class GetProfile extends StatelessWidget {
@@ -21,6 +22,9 @@ class GetProfile extends StatelessWidget {
             Text("Email: ${userProvider.getUser().email.toString()}"),
             Text("Phone: ${userProvider.getUser().phone.toString()}"),
             Text("Address: ${userProvider.getUser().address.toString()}"),
+            ElevatedButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> UpdateProfile()));
+            }, child: Text("Update Profile"))
           ],
         ),
       ),

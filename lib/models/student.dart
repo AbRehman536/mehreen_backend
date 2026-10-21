@@ -8,6 +8,7 @@ class StudentModel {
   final String? docId;
   final String? courseID;
   final String? name;
+  final String? image;
   final int? age;
   final String? city;
   final bool? isPassed;
@@ -18,6 +19,7 @@ class StudentModel {
     this.docId,
     this.courseID,
     this.name,
+    this.image,
     this.age,
     this.city,
     this.isPassed,
@@ -29,6 +31,7 @@ class StudentModel {
     docId: json["docID"],
     courseID: json["courseID"],
     name: json["name"],
+    image: json["image"],
     age: json["age"],
     city: json["city"],
     isPassed: json["isPassed"],
@@ -40,6 +43,7 @@ class StudentModel {
     "docID": studentID,
     "courseID": courseID,
     "name": name,
+    "image": image,
     "age": age,
     "city": city,
     "isPassed": isPassed,

@@ -76,16 +76,29 @@ class GetAllStudents extends StatelessWidget {
                                     Container(
                                         decoration: BoxDecoration(
                                             color: Colors.grey,
-                                            shape: .circle
+                                           // shape: .circle
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Text("${index + 1}",
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w800,
-                                                color: Colors.white
-                                            ),),
+                                          child:  Align(
+                                            alignment: Alignment.center,
+                                            child: studentList[index].image!.startsWith('http')
+                                                ? Image.network(
+                                              studentList[index].image.toString(),
+                                              width: 89,
+                                              height: 79,
+                                              fit: BoxFit.cover,
+                                              errorBuilder: (context, error, stackTrace) =>
+                                              const Icon(Icons.image_not_supported, size: 50),
+                                            )
+                                                : Image.asset(
+                                              studentList[index].image.toString(),
+                                              width: 89,
+                                              height: 79,
+                                              errorBuilder: (context, error, stackTrace) =>
+                                              const Icon(Icons.image, size: 50),
+                                            ),
+                                          ),
                                         )),
                                     SizedBox(width: 10,),
                                     Text(studentList[index].name.toString(),

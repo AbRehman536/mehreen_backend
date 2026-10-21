@@ -3,14 +3,14 @@ import 'package:mehreen_backend/models/userModel.dart';
 
 class UserProvider extends ChangeNotifier {
 
-  UserModel _userModel = UserModel();
+  UserModel userModel = UserModel();
 
   ///set User
  void setUser(UserModel model){
-   _userModel = model;
+   userModel = model;
    notifyListeners();
  }
 
  ///get User
- UserModel getUser() => _userModel;
+ UserModel getUser() => userModel;
 }
